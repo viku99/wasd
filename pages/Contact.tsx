@@ -1,7 +1,8 @@
 import React from 'react';
 // FIX: Import `Variants` to correctly type animation variants.
 import { motion, Variants } from 'framer-motion';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, Instagram, Briefcase } from 'lucide-react';
+import { SOCIAL_LINKS } from '../constants';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -25,6 +26,13 @@ const itemVariants: Variants = {
 };
 
 const Contact = () => {
+  const socialIcons: { [key: string]: React.ReactNode } = {
+    LinkedIn: <Linkedin size={28} />,
+    Behance: <Briefcase size={28} />,
+    Github: <Github size={28} />,
+    Instagram: <Instagram size={28} />,
+  };
+
   return (
     <div className="container mx-auto px-6 md:px-8 pt-40 pb-24 min-h-screen flex items-center justify-center">
       <motion.div
@@ -50,9 +58,19 @@ const Contact = () => {
           className="flex justify-center gap-8 mb-12"
           variants={itemVariants}
         >
-          <a href="#" className="text-neutral-500 hover:text-accent transition-colors"><Github size={28} /></a>
-          <a href="#" className="text-neutral-500 hover:text-accent transition-colors"><Linkedin size={28} /></a>
-          <a href="mailto:hello@example.com" className="text-neutral-500 hover:text-accent transition-colors"><Mail size={28} /></a>
+          {SOCIAL_LINKS.map((link) => (
+            <a 
+              key={link.name}
+              href={link.href} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label={link.name}
+              className="text-neutral-500 hover:text-accent transition-colors"
+            >
+              {socialIcons[link.name]}
+            </a>
+          ))}
+          <a href="mailto:vikasbg.png@gmail.com" aria-label="Email" className="text-neutral-500 hover:text-accent transition-colors"><Mail size={28} /></a>
         </motion.div>
 
         <motion.form 
