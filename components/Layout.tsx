@@ -1,24 +1,23 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useAppContext } from '../contexts/AppContext';
 import Navigation from './Navigation';
-import CustomCursor from './CustomCursor';
 import Showreel from './Showreel';
 
-const pageVariants = {
+const pageVariants: Variants = {
   initial: {
-    clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)',
-    transition: { duration: 0.5 },
+    clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
+    opacity: 1, // Start with opacity 1 to avoid flashing
   },
-  // FIX: Renamed variant from 'in' to 'enter' to resolve a TypeScript error with framer-motion's Variants type. The 'in' keyword can cause conflicts with type definitions.
   enter: {
-    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-    transition: { duration: 0.5, ease: 'easeInOut' },
+    clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+    opacity: 1,
+    transition: { duration: 1, ease: [0.76, 0, 0.24, 1] },
   },
   out: {
-    clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)',
-    transition: { duration: 0.5, ease: 'easeInOut' },
+    opacity: 0,
+    transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
   },
 };
 
@@ -27,11 +26,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isReelPlaying } = useAppContext();
 
   return (
-    <div className="bg-background text-accent font-sans min-h-screen relative overflow-hidden">
-      {/* Living Background */}
+    <div className="bg-background text-accent font-sans min-h-screen relative overflow-x-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-[url('https://assets.website-files.com/62338695029a995431057421/62338695029a997230057467_noise.gif')] opacity-5 z-0"></div>
-
-      <CustomCursor />
       
       <AnimatePresence mode="wait">
         {isReelPlaying && <Showreel />}
@@ -44,10 +40,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <motion.div
               key={location.pathname}
               initial="initial"
-              // FIX: Updated `animate` prop to match the renamed variant 'enter'.
               animate="enter"
               exit="out"
               variants={pageVariants}
+              className="bg-background"
             >
               {children}
             </motion.div>
