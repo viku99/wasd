@@ -4,6 +4,7 @@ import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useAppContext } from '../contexts/AppContext';
 import Navigation from './Navigation';
 import Showreel from './Showreel';
+import BottomNavigation from './BottomNavigation';
 
 const pageVariants: Variants = {
   initial: {
@@ -33,7 +34,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         {isReelPlaying && <Showreel />}
       </AnimatePresence>
 
-      <div className="relative z-10">
+      <div className="relative z-10 pb-16 md:pb-0">
         <Navigation />
         <main>
            <AnimatePresence mode="wait">
@@ -49,6 +50,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </motion.div>
           </AnimatePresence>
         </main>
+        <BottomNavigation />
       </div>
     </div>
   );

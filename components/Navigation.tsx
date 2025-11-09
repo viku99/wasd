@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAppContext } from '../contexts/AppContext';
 import { useScrollDirection } from '../hooks/useScrollDirection';
+import Logo from './Logo';
 
 const NavItem: React.FC<{ to: string; children: React.ReactNode }> = ({ to, children }) => {
   return (
@@ -47,13 +47,13 @@ const Navigation = () => {
             transition={{ duration: 0.35, ease: 'easeInOut' }}
         >
             <div className="container mx-auto flex justify-between items-center">
-                <NavLink to="/">
-                    <div className="text-xl font-bold tracking-wider">VIKAS</div>
-                </NavLink>
+                <Logo />
 
                 <nav className="hidden md:flex items-center gap-10">
                     <NavItem to="/">Home</NavItem>
                     <NavItem to="/portfolio">Portfolio</NavItem>
+                    <NavItem to="/about">About</NavItem>
+                    <NavItem to="/contact">Contact</NavItem>
                 </nav>
 
                 <button
